@@ -8,7 +8,7 @@ return {
     pcall(preview == preview(api, api_serve))
     if ok then
       os.execute("sleep " .. 1)
-      vim.cmd(':exec "!xdg-open ' .. api_serve .. '"')
+      vim.cmd(':te xdg-open "' .. api_serve .. '"')
     end
   end, {}),
   vim.api.nvim_create_user_command("OASPreviewStop", function ()
