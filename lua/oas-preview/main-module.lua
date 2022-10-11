@@ -1,27 +1,48 @@
-local function preview(api, api_serve)
+
+local M = {}
+
+function M.run(allopts)
+
+  -- init vars from allopts table param
+  local api_serve = allopts.api_route
+  local port = allopts.port
+  local ui = allopts.ui
+
   -- load filename
   local file = vim.fn.expand("%:p")
 
+  -- and hmmm.. after read a while :help expand() finally can figure how to mounting dir on docker container..
+  -- now we're no longer use http-server module _(:3 _| )_
+  local relative_path = vim.fn.expand("%:p:h")
+  local file_name = vim.fn.expand("%:t")
+
+  if ui == "redoc" then
+  -- still wip for redoc
   -- serving with redoc must insttall redocly via npm first
   -- vim.cmd("5split")
   -- local command = ':call jobsend(b:terminal_job_id, "redocly preview-docs ' .. file .. '\\n")'
   -- vim.cmd(command)
+    print("still wip")
+  end
 
-  -- serving with swagger-ui
-  -- default serving api with this url sorry i still can't figure it out T_T
-  -- make 'docs' directory and put your OAS3 spec .yaml on it
-  -- then name it api-docs.yaml
-  -- local api = "http://127.0.0.1:3333/docs/api-docs.yaml"
-  -- local api_serve = "http://127.0.0.1:1111/"
+  if ui == "swagger" then 
+    -- serving with swagger-ui
+    -- default serving api with this url sorry i still can't figure it out T_T
+    -- and feel free to edit/changes api_serve on conf.lua
 
-  local api = api
-  local api_serve = api_serve
+    vim.cmd("5split")
 
-  -- serving http-server && docker swaggerapi/swagger-ui
-  -- first you'll need install http-server via npm & pull swaggerapi/swagger-ui from docker hub
-  vim.cmd("5split")
-  local command = ':te echo -e "\\x1b[36;1mSwagger-UI: '.. api_serve ..'\\n\\x1b[32;1mCotainer running:" && docker run -d --init --name swagger-ui -p 1111:8080 -e API_URL='.. api ..' swaggerapi/swagger-ui && http-server -p 3333 -c-1 --cors'
-  vim.cmd(command)
+    -- serving OAS spec w/ docker image swaggerapi/swagger-ui
+    -- first you'll need pull swaggerapi/swagger-ui from docker hub
+    -- im so sory for this nasty script put on local command vars but its work tho _(:3 _|)_
+    local command = ':te echo -e "\\x1b[36;1mSwagger-UI: '.. api_serve ..':'.. port ..'\\n\\x1b[32;1mCotainer running:" && docker run -d --init --name swagger-ui -p '.. port ..':8080 -e SWAGGER_JSON=/foo/'.. file_name ..' -v '.. relative_path ..':/foo swaggerapi/swagger-ui'
+
+    vim.cmd(command)
+  end
+
 end
 
-return preview
+
+return M
+
+
