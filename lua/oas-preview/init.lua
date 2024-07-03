@@ -16,7 +16,7 @@ M.preview = require("oas-preview.main-module")
 vim.api.nvim_create_user_command("OASPreview", function(p)
 	print("Starting OAS-Preview..")
 	print(M.config)
-	print("$M.config.api_route:$M.config.port $M.config.ui")
+	print(M.config.api_route .. ":" .. M.config.port .. " - " .. M.config.ui)
 	M.preview.run(M.config)
 end, {})
 
