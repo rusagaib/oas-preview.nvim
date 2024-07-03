@@ -1,4 +1,3 @@
-
 local M = {}
 
 M.config = {}
@@ -15,19 +14,16 @@ M.preview = require("oas-preview.main-module")
 -- end
 
 vim.api.nvim_create_user_command("OASPreview", function(p)
-  print "Starting OAS-Preview.."
-  print(M.config)
-  print(M.config.api_route, M.config.port, M.config.ui)
-  M.preview.run(M.config)
+	print("Starting OAS-Preview..")
+	print(M.config)
+	print("$M.config.api_route:$M.config.port $M.config.ui")
+	M.preview.run(M.config)
 end, {})
 
-vim.api.nvim_create_user_command("OASPreviewStop", function (p)
-  print "Stoping Services.."
-  vim.cmd(':bd!')
-  vim.cmd(':exec "!docker rm -f swagger-ui"')
+vim.api.nvim_create_user_command("OASPreviewStop", function(p)
+	print("Stoping Services..")
+	vim.cmd(":bd!")
+	vim.cmd(':exec "!docker rm -f swagger-ui"')
 end, {})
-
 
 return M
-
-
