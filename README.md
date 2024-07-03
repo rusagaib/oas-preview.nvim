@@ -23,6 +23,14 @@ add this line on your packer config.lua just add rusagaib/oas-preview.nvim
 use {'rusagaib/oas-preview.nvim'}
 ```
 
+#### Plug:
+add this line on your config
+
+```
+Plug 'rusagaib/oas-preview.nvim'
+```
+
+
 ### 3. Apply oas-preview plugin :
 In your init.lua (Default):
 ```
