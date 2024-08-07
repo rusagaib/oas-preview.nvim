@@ -1,10 +1,11 @@
 local M = {}
+local conf = require('oas-preview.conf')
 
-function M.run(allopts)
+function M.run()
 	-- init vars from allopts table param
-	local api_serve = allopts.api_route
-	local port = allopts.port
-	local ui = allopts.ui
+	local api_serve = conf.get('api_route')
+	local port = conf.get('port')
+	local ui = conf.get('ui')
 
 	-- load filename
 	local file = vim.fn.expand("%:p")
@@ -20,8 +21,21 @@ function M.run(allopts)
 		-- vim.cmd("5split")
 		-- local command = ':call jobsend(b:terminal_job_id, "redocly preview-docs ' .. file .. '\\n")'
 		-- vim.cmd(command)
-		print("still wip")
+    -- official docker-images:
+    -- https://hub.docker.com/r/redocly/redoc/
+    -- docker pull redocly/redoc
+		print("still wip for redoc..")
 	end
+
+  if ui == "stoplight" then
+    -- wip for stoplight 
+    -- still no official docker image for stoplight shame..
+    -- issue here: https://github.com/stoplightio/elements/issues/765
+    -- unofficial npm & docker-images:
+    -- https://www.npmjs.com/package/@skriptfabrik/elements-cli
+    -- docker pull skriptfabrik/elements-cli
+    print("still wip for stoplight..")
+  end
 
 	if ui == "swagger" then
 		-- serving with swagger-ui
