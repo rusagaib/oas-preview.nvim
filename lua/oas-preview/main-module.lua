@@ -42,25 +42,59 @@ function M.run()
 		-- default serving api with this url sorry i still can't figure it out T_T
 		-- and feel free to edit/changes api_serve on conf.lua
 
-		vim.cmd("5split")
+		-- vim.cmd("5split") -- ill just echoing the messange for now on..
 
 		-- serving OAS spec w/ docker image swaggerapi/swagger-ui
 		-- first you'll need pull swaggerapi/swagger-ui from docker hub
 		-- im so sory for this nasty script put on local command vars but its work tho _(:3 _|)_
-		local command = ':te echo -e "\\x1b[36;1mSwagger-UI: '
-			.. api_serve
-			.. ":"
-			.. port
-			.. '\\n\\x1b[32;1mCotainer running:" && docker run -d --init --name swagger-ui -p '
-			.. port
-			.. ":8080 -e SWAGGER_JSON=/foo/"
-			.. file_name
-			.. " -v "
-			.. relative_path
-			.. ":/foo swaggerapi/swagger-ui"
+		-- local command = ':te echo -e "\\x1b[36;1mSwagger-UI: '
+		-- 	.. api_serve
+		-- 	.. ":"
+		-- 	.. port
+		-- 	.. '\\n\\x1b[32;1mCotainer running:" && docker run -d --init --name swagger-ui -p '
+		-- 	.. port
+		-- 	.. ":8080 -e SWAGGER_JSON=/foo/"
+		-- 	.. file_name
+		-- 	.. " -v "
+		-- 	.. relative_path
+		-- 	.. ":/foo swaggerapi/swagger-ui"
 
-		vim.cmd(command)
+		-- vim.cmd(command)
+
+    local command = 'docker run -d --init --name ' .. ui .. '-ui -p '
+			.. port
+			.. ':8080 -e SWAGGER_JSON=/foo/'
+			.. file_name
+			.. ' -v '
+			.. relative_path
+			.. ':/foo swaggerapi/swagger-ui'
+
+    -- background command to run not out opt it on messange like vim.cmd() do..
+    local result = vim.fn.system(command)
+
+    -- error handle
+    if vim.v.shell_error ~= 0 then
+      print("Error: " .. result) -- If the command fails, display the error
+    end
+  -- end if ui 
 	end
+-- end run()
+end
+
+function M.stop()
+	local api_serve = conf.get('api_route')
+	local port = conf.get('port')
+	local ui = conf.get('ui')
+
+  -- background command to run not out opt it on messange like vim.cmd() do..
+  local result = vim.fn.system('docker rm -f ' .. ui .. '-ui')
+
+  -- error handle
+  if vim.v.shell_error ~= 0 then
+    print("Error: " .. result) -- If the command fails, display the error
+  end
+-- end stop()
 end
 
 return M
+
