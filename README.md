@@ -48,7 +48,8 @@ basic config with auto-setup :sparkles:
         require('oas-preview').setup({
             api_route = "http://127.0.0.1", 
             port = "1111",  -- up-to-you 
-            ui = "swagger"  -- "swagger", "redoc", "stoplight"
+            ui = "swagger",  -- "swagger", "redoc", "stoplight"
+            auto_open_url = false -- false to disable it, default is true 
         })  
     end,
 },

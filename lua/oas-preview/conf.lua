@@ -4,7 +4,8 @@ local util = require("oas-preview.utils")
 M.default_opts = {
   api_route = "http://127.0.0.1",
   port = "1111",
-  ui = "swagger"
+  ui = "swagger",
+  auto_open_url = true
 }
 
 M.options = vim.deepcopy(M.default_opts)
