@@ -1,7 +1,7 @@
 ![image](https://img.shields.io/github/license/rusagaib/oas-preview.nvim)
 
 # oas-preview.nvim
-WIP a simple nvim plugin to privew oas/openapis3 or swagger spec currently serve the api-docs using swagger-ui only..
+WIP a simple nvim plugin to preview oas/openapis3 or swagger spec, now includes multiple wrapper container-ui to choose for your preference like swagger, redocly/redoc and stoplight 
 
 ![image](docs/preview.png)
 
@@ -14,13 +14,13 @@ WIP a simple nvim plugin to privew oas/openapis3 or swagger spec currently serve
 ```sh
 docker pull swaggerapi/swagger-ui:latest
 ```
-**redoc-ui (docker): currently inprogress** :construction:
+**redoc-ui (docker):**
 
 ```sh
 docker pull redocly/redoc
 ```
 
-**stoplight-ui (unofficial docker): currently inprogress** :construction:
+**stoplight-ui (unofficial docker):**
 
 ```sh
 docker pull skriptfabrik/elements-cli
@@ -29,7 +29,7 @@ docker pull skriptfabrik/elements-cli
 ### Install Plugin :rocket:
 ---
 
-**Lazy.nvim:**
+**Lazy.nvim:** *recomended* :hugs:
 
 Default:
 
@@ -39,17 +39,17 @@ Default:
 },
 ```
 
-basic config with auto-setup :sparkles:
+basic config with auto-setup  :sparkles:
 
 ```
 {
     'rusagaib/oas-preview.nvim',
     config = function()
         require('oas-preview').setup({
-            api_route = "http://127.0.0.1", 
             port = "1111",  -- up-to-you 
             ui = "swagger",  -- "swagger", "redoc", "stoplight"
-            auto_open_url = false -- false to disable it, default is true 
+            auto_open_url = false -- false to disable it, default is true
+            expose = false -- false to disable from exposing your container-ui, default is false so don't worry man
         })  
     end,
 },
@@ -75,23 +75,35 @@ Plug 'rusagaib/oas-preview.nvim'
 ### Apply/setup oas-preview plugin :bow:
 ---
 
-In your init.lua (Default):
+if you're not using Lazy.nvim as plugin manager this section is needed..
 
-currently avail ui = "swagger", 
-
-inprogress :construction: = "redoc", "stoplight"
+In your init.lua (Default nvim config):
 
 ```
-# with Default config (ui = swagger)
+# with Default config you'll get this conf 
+# api_route = "http://127.0.0.1",
+# port = "1111", 
+# ui = "swagger", 
+# auto_open_url = true, 
+# expose = false
 require('oas-preview').setup({})
-# OR
-require('oas-preview').setup({api_route="http://127.0.0.1", port="2222", ui="stoplight"})
+```
+
+~ OR ~
+
+```
+# choose your preferences ui, disable auto_open_url, disable expose host container-ui etc..
+require('oas-preview').setup({
+    port="2222", -- or any port you want 
+    ui="stoplight", -- option ui: swagger, redoc, stoplight 
+    auto_open_url=false, -- you can choose true or false
+    expose=false -- default is false tho, but if you need to expose it for local network test or else you can set it to true
+})
 ```
 
 ### Run :fire:
 ---
 
-will call another buffer split to bottom, press enter and then it will build container to run container `ui-services` and serve api documentation based from swagger or openapi3 spec (.yaml or .json)
 
 ```
 :OASPreview
@@ -101,10 +113,29 @@ will call another buffer split to bottom, press enter and then it will build con
 ### Stop opts :triangular_flag_on_post:
 ---
 
-will stop buffer commands & delete container services
+will stop buffer commands & delete container-ui
 
 ```
 :OASPreviewStop
+```
+
+
+### Check Config :gear: 
+---
+
+will print out your set config on oas-preview  
+
+```
+:OASPreviewConf
+```
+
+### Check Runing Service container-ui :package: 
+---
+
+will print out your container-ui info 
+
+```
+:OASPreviewCheck
 ```
 
 ---
