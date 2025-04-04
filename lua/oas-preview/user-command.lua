@@ -6,7 +6,6 @@ local status, message = util.cekuistatus(conf.options.ui)
 vim.api.nvim_create_user_command("OASPreview", function()
 	if status then
 		print("Starting OAS-Preview..")
-		print(conf.options.api_route .. ":" .. conf.options.port .. " - " .. conf.options.ui)
 		main_module.run()
 		if conf.options.auto_open_url then
 			local open_cmd = util.ostype(conf.options.api_route, conf.options.port)
@@ -21,10 +20,15 @@ end, {})
 
 vim.api.nvim_create_user_command("OASPreviewStop", function()
 	print("Stoping Services..")
-	-- vim.cmd(":bd!")
-	-- vim.cmd(':exec "!docker rm -f swagger-ui"')
-	-- background command to run not out opt it on messange like vim.cmd() do..
-	-- local result = vim.fn.system('docker rm -f ' .. conf.options.ui .. '-ui')
-	-- but then i just move it to main-module.lua
 	main_module.stop()
+end, {})
+
+vim.api.nvim_create_user_command("OASPreviewCheck", function()
+	print("Checking Runing Services..")
+	main_module.cek()
+end, {})
+
+vim.api.nvim_create_user_command("OASPreviewConf", function()
+	print("oas-preview.nvim config:")
+  conf.info()
 end, {})
