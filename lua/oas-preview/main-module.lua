@@ -99,7 +99,7 @@ function M.stop()
   if vim.v.shell_error ~= 0 then
     print("Error: " .. result) -- If the command fails, display the error
   else
-    print(result)
+    print(result .. "successfuly stoped")
   end
 -- end stop()
 end

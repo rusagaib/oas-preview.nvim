@@ -9,6 +9,7 @@ M.default_opts = {
 	ui = "swagger",
 	auto_open_url = true,
   expose = false,
+  os = "unix",
 }
 
 M.options = vim.deepcopy(M.default_opts)
@@ -36,10 +37,12 @@ end
 
 M.info = function()
   util.print_config(
+    M.get('api_route'),
     M.get('port'),
     M.get('ui'),
     M.get('auto_open_url'),
-    M.get('expose')
+    M.get('expose'),
+    M.get('os')
   )
 end
 

@@ -46,10 +46,11 @@ basic config with auto-setup  :sparkles:
     'rusagaib/oas-preview.nvim',
     config = function()
         require('oas-preview').setup({
-            port = "1111",  -- up-to-you 
-            ui = "swagger",  -- "swagger", "redoc", "stoplight"
+            port = "1111",        -- up-to-you 
+            ui = "swagger",       -- "swagger", "redoc", "stoplight"
             auto_open_url = false -- false to disable it, default is true
-            expose = false -- false to disable from exposing your container-ui, default is false so don't worry man
+            expose = false        -- if it true will serve app container to use local network ip with port 80, default are false
+            os = "linux"          -- "linux", "mac", "win", "wsl" if not set will use default "linux"
         })  
     end,
 },
@@ -81,11 +82,11 @@ In your init.lua (Default nvim config):
 
 ```
 # with Default config you'll get this conf 
-# api_route = "http://127.0.0.1",
 # port = "1111", 
 # ui = "swagger", 
 # auto_open_url = true, 
 # expose = false
+# os = "linux"
 require('oas-preview').setup({})
 ```
 
@@ -94,10 +95,11 @@ require('oas-preview').setup({})
 ```
 # choose your preferences ui, disable auto_open_url, disable expose host container-ui etc..
 require('oas-preview').setup({
-    port="2222", -- or any port you want 
-    ui="stoplight", -- option ui: swagger, redoc, stoplight 
+    port="2222",         -- or any port you want 
+    ui="stoplight",      -- option ui: swagger, redoc, stoplight 
     auto_open_url=false, -- you can choose true or false
-    expose=false -- default is false tho, but if you need to expose it for local network test or else you can set it to true
+    expose=false         -- default false tho, but if you need to expose it for local network test etc, you can set it to true
+    os="mac"             -- "linux", "mac", "win", "wsl" if not set will use default "linux"
 })
 ```
 
@@ -139,6 +141,23 @@ will print out your container-ui info
 ```
 
 ---
+
+
+### Note for wsl users you need install wslview to exec xdg-open browser: 
+---
+
+#### [Ubuntu wsl2](https://wslu.wedotstud.io/wslu/install.html#ubuntu) :
+
+```sh
+sudo add-apt-repository ppa:wslutilities/wslu
+sudo apt update
+sudo apt install wslu
+```
+
+*for any distro wsl you can view other installation guide [here](https://wslu.wedotstud.io/wslu/install.html)
+
+---
+
 
 #### Any contributions are welcome :beer:
 

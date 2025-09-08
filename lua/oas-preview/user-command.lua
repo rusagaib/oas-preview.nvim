@@ -8,9 +8,16 @@ vim.api.nvim_create_user_command("OASPreview", function()
 		print("Starting OAS-Preview..")
 		main_module.run()
 		if conf.options.auto_open_url then
-			local open_cmd = util.ostype(conf.options.api_route, conf.options.port)
-			local result = os.execute(open_cmd)
-		end
+      local open_cmd = util.ostype(conf.options.api_route, conf.options.port, conf.options.os)
+      if conf.options.expose then
+        open_cmd = util.ostype(conf.options.api_route, "80", conf.options.os)
+        vim.fn.jobstart(open_cmd, {detach = true})
+      else
+        open_cmd = util.ostype(conf.options.api_route, conf.options.port, conf.options.os)
+        -- local result = os.execute(open_cmd)
+        vim.fn.jobstart(open_cmd, {detach = true})
+      end
+    end
 	else
 		print("Error Starting OAS-Preview")
 		print("status: ", status)
