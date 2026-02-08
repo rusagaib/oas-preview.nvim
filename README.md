@@ -161,3 +161,10 @@ sudo apt install wslu
 
 #### Any contributions are welcome :beer:
 
+#### Resource:
+
+- [HTTP Status Code (MDN)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status) 
+- [OpenApi Spec](https://spec.openapis.org/oas/v3.1.0.html)
+- [OpenApi Swagger](https://swagger.io/specification/)
+- [OpenApi Examples](https://learn.openapis.org/examples/)
+
